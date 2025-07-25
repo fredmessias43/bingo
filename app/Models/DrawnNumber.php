@@ -9,14 +9,14 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
-class DrawnNumbers extends Model
+class DrawnNumber extends Model
 {
 	use HasFactory;
 	use SoftDeletes;
 
 	protected $keyType = "string";
 	public $incrementing = false;
-	
+
 	/**
 	 * The attributes that should be cast.
 	 *
@@ -24,7 +24,7 @@ class DrawnNumbers extends Model
 	 */
 	protected $casts = [
 	];
-	
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -35,14 +35,14 @@ class DrawnNumbers extends Model
 		'game_id',
 		'number',
 	];
-	
+
 	/**
 	 * The "booted" method of the model.
 	 */
 	protected static function booted(): void
 	{
 		static::creating(function ($drawnNumbers) {
-			$drawnNumbers->id = Str::uuid();
+			$drawnNumbers->id = Str::uuid7();
 		});
 	}
 
@@ -50,6 +50,6 @@ class DrawnNumbers extends Model
 	{
 		return $this->belongsTo(Game::class);
 	}
-	
+
 
 };

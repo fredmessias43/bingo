@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cards;
-use App\Http\Requests\CardsRequest;
-use App\Http\Resources\CardsCollection;
-use App\Http\Resources\CardsResource;
+use App\Models\Card;
+use App\Http\Requests\CardRequest;
+use App\Http\Resources\CardCollection;
+use App\Http\Resources\CardResource;
 
 
-class CardsController extends Controller
+class CardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $cards = Cards::paginate(request()->query('per_page', 10));
+        $cards = Card::paginate(request()->query('per_page', 10));
 
-        return inertia('admin/Cards', [
-            'cards' => CardsResource::collection($cards),
+        return inertia('admin/Card', [
+            'cards' => CardResource::collection($cards),
         ]);
     }
 
@@ -34,13 +34,13 @@ class CardsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CardsRequest $request)
+    public function store(CardRequest $request)
     {
         try {
-            $cards = Cards::create($request->validated());
+            $cards = Card::create($request->validated());
 
             return to_route('cards.index')->with([
-                'message' => 'Cards created successfully',
+                'message' => 'Card created successfully',
                 'cards' => $cards,
             ]);
         } catch (\Throwable $th) {
@@ -50,7 +50,7 @@ class CardsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Cards $cards)
+    public function show(Card $cards)
     {
         //
     }
@@ -58,7 +58,7 @@ class CardsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Cards $cards)
+    public function edit(Card $cards)
     {
         //
     }
@@ -66,13 +66,13 @@ class CardsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(CardsRequest $request, Cards $cards)
+    public function update(CardRequest $request, Card $cards)
     {
         try {
             $cards->update($request->validated());
 
             return to_route('cards.index')->with([
-                'message' => 'Cards updated successfully',
+                'message' => 'Card updated successfully',
                 'cards' => $cards,
             ]);
         } catch (\Throwable $th) {
@@ -83,13 +83,13 @@ class CardsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Cards $cards)
+    public function destroy(Card $cards)
     {
         try {
             $cards->delete();
 
             return to_route('cards.index')->with([
-                'message' => 'Cards deleted successfully',
+                'message' => 'Card deleted successfully',
             ]);
         } catch (\Throwable $th) {
             return back()->withErrors(['error' => 'Failed to delete cards']);

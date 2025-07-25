@@ -3,23 +3,23 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Awards;
-use App\Http\Requests\AwardsRequest;
-use App\Http\Resources\AwardsCollection;
-use App\Http\Resources\AwardsResource;
+use App\Models\Award;
+use App\Http\Requests\AwardRequest;
+use App\Http\Resources\AwardCollection;
+use App\Http\Resources\AwardResource;
 
 
-class AwardsController extends Controller
+class AwardController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $awards = Awards::paginate(request()->query('per_page', 10));
+        $awards = Award::paginate(request()->query('per_page', 10));
 
-        return inertia('Awards', [
-            'awards' => AwardsResource::collection($awards),
+        return inertia('Award', [
+            'awards' => AwardResource::collection($awards),
         ]);
     }
 
@@ -34,13 +34,13 @@ class AwardsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AwardsRequest $request)
+    public function store(AwardRequest $request)
     {
         try {
-            $awards = Awards::create($request->validated());
+            $awards = Award::create($request->validated());
 
             return to_route('awards.index')->with([
-                'message' => 'Awards created successfully',
+                'message' => 'Award created successfully',
                 'awards' => $awards,
             ]);
         } catch (\Throwable $th) {
@@ -50,7 +50,7 @@ class AwardsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Awards $awards)
+    public function show(Award $awards)
     {
         //
     }
@@ -58,7 +58,7 @@ class AwardsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Awards $awards)
+    public function edit(Award $awards)
     {
         //
     }
@@ -66,13 +66,13 @@ class AwardsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AwardsRequest $request, Awards $awards)
+    public function update(AwardRequest $request, Award $awards)
     {
         try {
             $awards->update($request->validated());
 
             return to_route('awards.index')->with([
-                'message' => 'Awards updated successfully',
+                'message' => 'Award updated successfully',
                 'awards' => $awards,
             ]);
         } catch (\Throwable $th) {
@@ -83,13 +83,13 @@ class AwardsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Awards $awards)
+    public function destroy(Award $awards)
     {
         try {
             $awards->delete();
 
             return to_route('awards.index')->with([
-                'message' => 'Awards deleted successfully',
+                'message' => 'Award deleted successfully',
             ]);
         } catch (\Throwable $th) {
             return back()->withErrors(['error' => 'Failed to delete awards']);

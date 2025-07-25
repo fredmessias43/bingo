@@ -28,41 +28,36 @@ class GameRequest extends FormRequest
 	protected function prepareForValidation()
 	{
 			$game = $this->route('game');
-	
+
 			if ($game instanceof Game)
 			{
 					$this->merge(['id' => $game->id]);
-	
+
 					if ( ! $this->has('id'))
 					{
 							$this->merge(['id' => $game->id]);
 					}
-	
+
 					if ( ! $this->has('name'))
 					{
 							$this->merge(['name' => $game->name]);
 					}
-	
+
 					if ( ! $this->has('description'))
 					{
 							$this->merge(['description' => $game->description]);
 					}
-	
+
 					if ( ! $this->has('max_players'))
 					{
 							$this->merge(['max_players' => $game->max_players]);
 					}
-	
-					if ( ! $this->has('document'))
-					{
-							$this->merge(['document' => $game->document]);
-					}
-	
+
 					if ( ! $this->has('status'))
 					{
 							$this->merge(['status' => $game->status]);
 					}
-	
+
 			}
 			else
 			{
@@ -91,11 +86,6 @@ class GameRequest extends FormRequest
 				'max_players' => array(
 					'bail',
 					'required',
-				),
-				'document' => array(
-					'bail',
-					'required',
-					'string',
 				),
 				'status' => array(
 					'bail',

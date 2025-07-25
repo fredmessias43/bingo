@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\DrawnNumbers;
+use App\Models\DrawnNumber;
 
 
-class DrawnNumbersRequest extends FormRequest
+class DrawnNumberRequest extends FormRequest
 {
 
 	/**
@@ -27,26 +27,26 @@ class DrawnNumbersRequest extends FormRequest
 	protected function prepareForValidation()
 	{
 			$drawnNumbers = $this->route('drawn_numbers');
-	
-			if ($drawnNumbers instanceof DrawnNumbers)
+
+			if ($drawnNumbers instanceof DrawnNumber)
 			{
 					$this->merge(['id' => $drawnNumbers->id]);
-	
+
 					if ( ! $this->has('id'))
 					{
 							$this->merge(['id' => $drawnNumbers->id]);
 					}
-	
+
 					if ( ! $this->has('game_id'))
 					{
 							$this->merge(['game_id' => $drawnNumbers->game_id]);
 					}
-	
+
 					if ( ! $this->has('number'))
 					{
 							$this->merge(['number' => $drawnNumbers->number]);
 					}
-	
+
 			}
 			else
 			{

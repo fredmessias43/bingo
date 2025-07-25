@@ -21,7 +21,6 @@ return new class extends Migration
 			$table->string('name');
 			$table->string('description');
 			$table->integer('max_players');
-			$table->string('document');
 			$table->enum('status', ['active','inactive','archived','completed'])->default('active');
 
 

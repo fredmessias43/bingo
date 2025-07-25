@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
 
 
-class DrawnNumbersResource extends JsonResource
+class CardResource extends JsonResource
 {
 
 	/**
@@ -19,11 +19,12 @@ class DrawnNumbersResource extends JsonResource
 	{
 		$createdAt = $this->created_at->locale(App::getLocale());
 		$updatedAt = $this->updated_at->locale(App::getLocale());
-	
+
 		return [
 			'id' => $this->id,
 			'game_id' => $this->game_id,
-			'number' => $this->number,
+			'player_id' => $this->player_id,
+			'numbers' => $this->numbers,
 			'created_at' => array(
 				'timestamp' => $createdAt->timestamp,
 				'description' => $createdAt->diffForHumans(),

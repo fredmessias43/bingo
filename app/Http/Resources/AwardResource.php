@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\App;
 
 
-class AwardsResource extends JsonResource
+class AwardResource extends JsonResource
 {
 
 	/**
@@ -19,7 +19,7 @@ class AwardsResource extends JsonResource
 	{
 		$createdAt = $this->created_at->locale(App::getLocale());
 		$updatedAt = $this->updated_at->locale(App::getLocale());
-	
+
 		return [
 			'id' => $this->id,
 			'game_id' => $this->game_id,

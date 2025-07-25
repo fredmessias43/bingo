@@ -19,13 +19,12 @@ class GameResource extends JsonResource
 	{
 		$createdAt = $this->created_at->locale(App::getLocale());
 		$updatedAt = $this->updated_at->locale(App::getLocale());
-	
+
 		return [
 			'id' => $this->id,
 			'name' => $this->name,
 			'description' => $this->description,
 			'max_players' => $this->max_players,
-			'document' => $this->document,
 			'status' => $this->status,
 			'created_at' => array(
 				'timestamp' => $createdAt->timestamp,

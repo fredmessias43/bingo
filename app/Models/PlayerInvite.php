@@ -16,7 +16,7 @@ class PlayerInvite extends Model
 
 	protected $keyType = "string";
 	public $incrementing = false;
-	
+
 	/**
 	 * The attributes that should be cast.
 	 *
@@ -24,7 +24,7 @@ class PlayerInvite extends Model
 	 */
 	protected $casts = [
 	];
-	
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -36,14 +36,14 @@ class PlayerInvite extends Model
 		'game_id',
 		'status',
 	];
-	
+
 	/**
 	 * The "booted" method of the model.
 	 */
 	protected static function booted(): void
 	{
 		static::creating(function ($playerInvite) {
-			$playerInvite->id = Str::uuid();
+			$playerInvite->id = Str::uuid7();
 		});
 	}
 
@@ -51,11 +51,11 @@ class PlayerInvite extends Model
 	{
 		return $this->belongsTo(Player::class);
 	}
-	
+
 	public function game(): BelongsTo
 	{
 		return $this->belongsTo(Game::class);
 	}
-	
+
 
 };

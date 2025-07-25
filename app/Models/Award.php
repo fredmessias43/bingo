@@ -9,23 +9,22 @@ use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
-class Cards extends Model
+class Award extends Model
 {
 	use HasFactory;
 	use SoftDeletes;
 
 	protected $keyType = "string";
 	public $incrementing = false;
-	
+
 	/**
 	 * The attributes that should be cast.
 	 *
 	 * @var array
 	 */
 	protected $casts = [
-		'numbers' => 'array',
 	];
-	
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -34,17 +33,18 @@ class Cards extends Model
 	protected $fillable = [
 		'id',
 		'game_id',
-		'player_id',
-		'numbers',
+		'name',
+		'description',
+		'image_url',
 	];
-	
+
 	/**
 	 * The "booted" method of the model.
 	 */
 	protected static function booted(): void
 	{
-		static::creating(function ($cards) {
-			$cards->id = Str::uuid();
+		static::creating(function ($awards) {
+			$awards->id = Str::uuid7();
 		});
 	}
 
@@ -52,11 +52,6 @@ class Cards extends Model
 	{
 		return $this->belongsTo(Game::class);
 	}
-	
-	public function player(): BelongsTo
-	{
-		return $this->belongsTo(Player::class);
-	}
-	
+
 
 };

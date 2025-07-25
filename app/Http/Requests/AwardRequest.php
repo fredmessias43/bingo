@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Cards;
+use App\Models\Award;
 
 
-class CardsRequest extends FormRequest
+class AwardRequest extends FormRequest
 {
 
 	/**
@@ -26,32 +26,37 @@ class CardsRequest extends FormRequest
 	 */
 	protected function prepareForValidation()
 	{
-			$cards = $this->route('cards');
-	
-			if ($cards instanceof Cards)
+			$awards = $this->route('awards');
+
+			if ($awards instanceof Award)
 			{
-					$this->merge(['id' => $cards->id]);
-	
+					$this->merge(['id' => $awards->id]);
+
 					if ( ! $this->has('id'))
 					{
-							$this->merge(['id' => $cards->id]);
+							$this->merge(['id' => $awards->id]);
 					}
-	
+
 					if ( ! $this->has('game_id'))
 					{
-							$this->merge(['game_id' => $cards->game_id]);
+							$this->merge(['game_id' => $awards->game_id]);
 					}
-	
-					if ( ! $this->has('player_id'))
+
+					if ( ! $this->has('name'))
 					{
-							$this->merge(['player_id' => $cards->player_id]);
+							$this->merge(['name' => $awards->name]);
 					}
-	
-					if ( ! $this->has('numbers'))
+
+					if ( ! $this->has('description'))
 					{
-							$this->merge(['numbers' => $cards->numbers]);
+							$this->merge(['description' => $awards->description]);
 					}
-	
+
+					if ( ! $this->has('image_url'))
+					{
+							$this->merge(['image_url' => $awards->image_url]);
+					}
+
 			}
 			else
 			{
@@ -72,15 +77,20 @@ class CardsRequest extends FormRequest
 					'required',
 					'uuid',
 				),
-				'player_id' => array(
+				'name' => array(
 					'bail',
 					'required',
-					'uuid',
+					'string',
 				),
-				'numbers' => array(
+				'description' => array(
 					'bail',
 					'required',
-					'array',
+					'string',
+				),
+				'image_url' => array(
+					'bail',
+					'required',
+					'string',
 				),
 			];
 	}

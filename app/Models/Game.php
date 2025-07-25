@@ -16,7 +16,7 @@ class Game extends Model
 
 	protected $keyType = "string";
 	public $incrementing = false;
-	
+
 	/**
 	 * The attributes that should be cast.
 	 *
@@ -24,7 +24,7 @@ class Game extends Model
 	 */
 	protected $casts = [
 	];
-	
+
 	/**
 	 * The attributes that are mass assignable.
 	 *
@@ -35,39 +35,38 @@ class Game extends Model
 		'name',
 		'description',
 		'max_players',
-		'document',
 		'status',
 	];
-	
+
 	/**
 	 * The "booted" method of the model.
 	 */
 	protected static function booted(): void
 	{
 		static::creating(function ($game) {
-			$game->id = Str::uuid();
+			$game->id = Str::uuid7();
 		});
 	}
 
 	public function awards(): HasMany
 	{
-		return $this->hasMany(Awards::class);
+		return $this->hasMany(Award::class);
 	}
-	
+
 	public function playerInvites(): HasMany
 	{
 		return $this->hasMany(PlayerInvite::class);
 	}
-	
+
 	public function cards(): HasMany
 	{
-		return $this->hasMany(Cards::class);
+		return $this->hasMany(Card::class);
 	}
-	
+
 	public function drawnNumbers(): HasMany
 	{
-		return $this->hasMany(DrawnNumbers::class);
+		return $this->hasMany(DrawnNumber::class);
 	}
-	
+
 
 };
