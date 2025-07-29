@@ -48,6 +48,11 @@ class Game extends Model
 		});
 	}
 
+    public function players(): HasMany
+    {
+        return $this->hasMany(Player::class);
+    }
+
 	public function awards(): HasMany
 	{
 		return $this->hasMany(Award::class);

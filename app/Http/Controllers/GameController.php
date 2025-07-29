@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Game;
@@ -52,7 +52,9 @@ class GameController extends Controller
      */
     public function show(Game $game)
     {
-        //
+        return inertia('games/Show', [
+            'game' => new GameResource($game),
+        ]);
     }
 
     /**

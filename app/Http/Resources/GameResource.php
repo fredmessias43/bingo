@@ -17,23 +17,15 @@ class GameResource extends JsonResource
 	 */
 	public function toArray($request)
 	{
-		$createdAt = $this->created_at->locale(App::getLocale());
-		$updatedAt = $this->updated_at->locale(App::getLocale());
-
-		return [
+	    return [
 			'id' => $this->id,
 			'name' => $this->name,
 			'description' => $this->description,
 			'max_players' => $this->max_players,
+			'players_count' => $this->players_count ?? 0,
 			'status' => $this->status,
-			'created_at' => array(
-				'timestamp' => $createdAt->timestamp,
-				'description' => $createdAt->diffForHumans(),
-			),
-			'updated_at' => array(
-				'timestamp' => $updatedAt->timestamp,
-				'description' => $updatedAt->diffForHumans(),
-			),
+			'created_at' => $this->created_at,
+			'updated_at' => $this->updated_at,
 		];
 	}
 
