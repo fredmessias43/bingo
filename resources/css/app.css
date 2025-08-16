@@ -170,6 +170,7 @@
     @apply inline-flex items-center justify-center rounded-lg text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
     @apply disabled:pointer-events-none disabled:opacity-50;
     @apply px-4 py-2;
+    @apply cursor-pointer;
 }
 .btn-success {
     @apply bg-green-500 text-white hover:bg-green-600 focus-visible:ring-green-500;
@@ -182,6 +183,9 @@
 }
 .btn-secondary {
     @apply bg-secondary text-secondary-foreground hover:bg-secondary/90 focus-visible:ring-secondary;
+}
+.btn-danger {
+    @apply bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive;
 }
 
 .card {

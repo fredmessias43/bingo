@@ -24,6 +24,7 @@ class GameResource extends JsonResource
 			'max_players' => $this->max_players,
 			'players_count' => $this->players_count ?? 0,
 			'status' => $this->status,
+			'game_data' => $this->game_data,
 			'created_at' => $this->created_at,
 			'updated_at' => $this->updated_at,
 		];

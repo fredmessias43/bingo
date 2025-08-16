@@ -7,16 +7,22 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatDate(dateString: string): string {
+    if (! dateString) return "--/--/----";
+
     const date = new Date(dateString);
     return format(date, 'dd/MM/yyyy');
 }
 
 export function formatTime(dateString: string): string {
+    if (! dateString) return "--:--";
+
     const date = new Date(dateString);
     return format(date, 'HH:mm');
 }
 
 export function formatDateTime(dateString: string): string {
+    if (! dateString) return "--/--/---- --:--";
+
     const date = new Date(dateString);
     return format(date, 'dd/MM/yyyy HH:mm');
 }

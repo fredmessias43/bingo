@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HTMLAttributes } from 'vue'
+import type { HTMLAttributes, InputTypeHTMLAttribute } from 'vue'
 import { cn } from '@/lib/utils'
 import { useVModel } from '@vueuse/core'
 
@@ -7,6 +7,7 @@ const props = defineProps<{
   defaultValue?: string | number
   modelValue?: string | number
   class?: HTMLAttributes['class']
+  type?: InputTypeHTMLAttribute
 }>()
 
 const emits = defineEmits<{
@@ -29,5 +30,6 @@ const modelValue = useVModel(props, 'modelValue', emits, {
       'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
       props.class,
     )"
+    :type="type"
   >
 </template>

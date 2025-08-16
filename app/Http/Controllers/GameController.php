@@ -28,7 +28,16 @@ class GameController extends Controller
      */
     public function create()
     {
-        //
+        return inertia('games/Upsert', [
+            'game_modes' => [
+                'data' => [
+                    ["id" => "1", "code" => "traditional", "name" => "Bingo Tradicional", "description" => "Bingo tradicional com cartelas 5x5",],
+                    ["id" => "2", "code" => "speed", "name" => "Bingo Rápido", "description" => "Bingo rápido com sorteio acelerado",],
+                    ["id" => "3", "code" => "progressive", "name" => "Bingo Progressivo", "description" => "Prêmio aumenta a cada jogo sem vencedor",],
+                    ["id" => "4", "code" => "tournament", "name" => "Torneio", "description" => "Torneio eliminatório entre jogadores",],
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -39,11 +48,12 @@ class GameController extends Controller
         try {
             $game = Game::create($request->validated());
 
-            return to_route('games.index')->with([
+            return back()->with([
                 'message' => 'Game created successfully',
                 'game' => $game,
             ]);
         } catch (\Throwable $th) {
+            return back()->withErrors(['error' => 'Failed to create game', 'exception' => $th->getMessage(),]);
         }
     }
 
@@ -62,7 +72,9 @@ class GameController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        return inertia('games/Upsert', [
+            'game' => new GameResource($game)
+        ]);
     }
 
     /**

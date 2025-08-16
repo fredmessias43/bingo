@@ -23,6 +23,7 @@ class Game extends Model
 	 * @var array
 	 */
 	protected $casts = [
+        'game_data' => 'array',
 	];
 
 	/**
@@ -36,6 +37,7 @@ class Game extends Model
 		'description',
 		'max_players',
 		'status',
+		'game_data',
 	];
 
 	/**

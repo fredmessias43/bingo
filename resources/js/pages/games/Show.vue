@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="flex items-center gap-4">
-                    <Badge :status="game.data.status" />
+                    <Badge :class="getStatusBadgeClass(game.data.status)">{{ getStatusText(game.data.status) }}</Badge>
                     <button class="btn btn-primary w-full flex items-center justify-center">
                         <PlayIcon class="w-4 h-4 mr-2" />
                         <span class="w-max">Iniciar Jogo</span>
@@ -116,8 +116,9 @@
 </template>
 
 <script setup lang="ts">
-import Badge from '@/components/modules/game/Badge.vue';
 import DrawnNumber from '@/components/modules/game/DrawnNumber.vue';
+import Badge from '@/components/ui/badge/Badge.vue';
+import { getStatusBadgeClass, getStatusText } from '@/lib/utils';
 import { Game, Resource } from '@/types/models';
 import { Head, Link } from '@inertiajs/vue3';
 import { ArrowLeftIcon, PersonStanding, PlayIcon, UserIcon, UsersIcon } from 'lucide-vue-next';

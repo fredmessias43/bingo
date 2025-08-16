@@ -4,7 +4,7 @@
             <div class="mb-4">
                 <div class="flex justify-between gap-4 mb-4">
                     <h3 class="text-xl font-semibold line-clamp-1" :title="game.name">{{ game.name }}</h3>
-                    <Badge :status="game.status" />
+                    <Badge :class="getStatusBadgeClass(game.status)">{{ getStatusText(game.status) }}</Badge>
                 </div>
                 <p class="text-gray-600 mt-1 line-clamp-1" :title="game.description">{{ game.description }}</p>
             </div>
@@ -13,12 +13,12 @@
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center text-sm text-gray-600">
-                        <Users class="w-4 h-4 mr-1" />
+                        <UsersIcon class="w-4 h-4 mr-1" />
                         {{ game?.players_count ?? 0 }}/{{ game.max_players }} jogadores
                     </div>
                     <div class="flex items-center text-sm text-gray-500">
-                        <Clock class="w-4 h-4 mr-1" />
-                        {{ formatTime(game.created_at) }}
+                        <ClockIcon class="w-4 h-4 mr-1" />
+                        {{ formatDateTime(game.game_data?.start_datetime ?? '') }}
                     </div>
                 </div>
                 <div class="flex items-center justify-between">
@@ -61,10 +61,10 @@
 <script setup lang="ts">
 import { Game } from '@/types/models';
 import { Link } from '@inertiajs/vue3';
-import { formatTime } from '@/lib/utils';
+import { formatDateTime, getStatusBadgeClass, getStatusText } from '@/lib/utils';
 import { User } from '@/types';
-import { Users, Clock } from 'lucide-vue-next';
-import Badge from './Badge.vue'
+import { UsersIcon, ClockIcon } from 'lucide-vue-next';
+import Badge from '@/components/ui/badge/Badge.vue';
 
 
 interface Props {

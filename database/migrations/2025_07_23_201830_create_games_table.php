@@ -19,9 +19,10 @@ return new class extends Migration
 		Schema::create('games', function (Blueprint $table) {
 			$table->uuid('id')->primary();
 			$table->string('name');
-			$table->string('description');
+			$table->string('description')->nullable();
 			$table->integer('max_players');
 			$table->enum('status', ['active','inactive','archived','completed'])->default('active');
+			$table->json('game_data')->default('{}');
 
 
 			$table->timestamps();

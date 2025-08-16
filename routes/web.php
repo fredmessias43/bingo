@@ -5,6 +5,7 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -16,9 +17,8 @@ Route::get('admin', [AdminController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('admin');
 
-Route::get('games/{game}', [GameController::class, 'show'])
-    ->middleware(['auth', 'verified'])
-    ->name('games.show');
+Route::resource('games',GameController::class)
+    ->middleware(['auth', 'verified', HandlePrecognitiveRequests::class]);
 
 Route::get('results/{game}', [GameController::class, 'results'])
     ->middleware(['auth', 'verified'])
