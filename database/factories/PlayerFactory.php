@@ -19,9 +19,7 @@ class PlayerFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'created_at' => now(),
-            'updated_at' => now(),
-            'user_id' => \App\Models\User::factory(), // Assuming Player is linked to User
+            'game_id' => \App\Models\Game::factory(),
         ];
     }
 }

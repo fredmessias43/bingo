@@ -19,7 +19,6 @@ class DrawnNumberFactory extends Factory
         return [
             'game_id' => \App\Models\Game::factory(),
             'number' => $this->faker->unique()->numberBetween(1, 75),
-            'drawn_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
         ];
     }
 }

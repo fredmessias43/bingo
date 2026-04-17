@@ -19,7 +19,6 @@ class PlayerInviteFactory extends Factory
         return [
             'game_id' => \App\Models\Game::factory(),
             'player_id' => \App\Models\Player::factory(),
-            'invited_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'status' => $this->faker->randomElement(['pending', 'accepted', 'declined']),
         ];
     }
