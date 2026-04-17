@@ -4,39 +4,41 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
+All PHP/Artisan commands run inside Sail. Use `./vendor/bin/sail` (or alias `sail`).
+
 ### Development
 
 ```bash
-composer dev          # Start all services concurrently: Laravel server, queue worker, log viewer (pail), and Vite
-composer dev:ssr      # Same as above but with SSR (runs npm run build:ssr first)
+sail composer dev          # Start all services concurrently: Laravel server, queue worker, log viewer (pail), and Vite
+sail composer dev:ssr      # Same as above but with SSR (runs npm run build:ssr first)
 ```
 
 ### Testing
 
 ```bash
-composer test                          # Clear config cache, then run all Pest tests
-php artisan test --filter "test name"  # Run a single test by name
-php artisan test tests/Feature/DashboardTest.php  # Run a specific test file
+sail composer test                                            # Clear config cache, then run all Pest tests
+sail artisan test --filter "test name"                        # Run a single test by name
+sail artisan test tests/Feature/DashboardTest.php             # Run a specific test file
 ```
 
 ### Frontend
 
 ```bash
-npm run build         # Vite production build (client-side)
-npm run build:ssr     # Vite production build (client + SSR)
-npm run lint          # ESLint with auto-fix
-npm run format        # Prettier format for resources/
-npm run format:check  # Check Prettier formatting without writing
+sail npm run build         # Vite production build (client-side)
+sail npm run build:ssr     # Vite production build (client + SSR)
+sail npm run lint          # ESLint with auto-fix
+sail npm run format        # Prettier format for resources/
+sail npm run format:check  # Check Prettier formatting without writing
 ```
 
 ### Initial Setup
 
 ```bash
-composer install && npm install
+sail up -d
+sail composer install && sail npm install
 cp .env.example .env
-php artisan key:generate
-touch database/database.sqlite
-php artisan migrate
+sail artisan key:generate
+sail artisan migrate
 ```
 
 ## Architecture
