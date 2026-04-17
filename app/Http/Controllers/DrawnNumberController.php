@@ -4,135 +4,51 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\DrawnNumber;
-use App\Http\Requests\DrawnNumberRequest;
-use App\Http\Resources\DrawnNumberCollection;
+use App\Models\Game;
 use App\Http\Resources\DrawnNumberResource;
-
+use Illuminate\Http\Request;
 
 class DrawnNumberController extends Controller
 {
+    public function index(Game $game)
+    {
+        $drawnNumbers = $game->drawnNumbers()->orderBy('created_at')->get();
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function index()
-	{
-		try
-		{
-			$drawnNumbers = DrawnNumber::all();
+        return response()->json([
+            'status' => 200,
+            'data'   => DrawnNumberResource::collection($drawnNumbers),
+        ]);
+    }
 
-			return response()->json([
-				'status' => 200,
-				'data' => DrawnNumberResource::collection($drawnNumbers),
-			], 200);
-		}
-		catch(\Throwable $th)
-		{
-			throw new \Exception('DrawnNumber can not be listed.' . $th->getMessage(), 500);
-		}
-	}
+    public function store(Request $request, Game $game)
+    {
+        $data = $request->validate([
+            'number' => 'required|integer|between:1,75',
+        ]);
 
+        if ($game->drawnNumbers()->where('number', $data['number'])->exists()) {
+            return response()->json([
+                'status'  => 422,
+                'message' => 'Number already drawn.',
+            ], 422);
+        }
 
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @param  \App\Http\Requests\DrawnNumberRequest $request
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function store(DrawnNumberRequest $request)
-	{
-		try
-		{
-			$drawnNumbers = DrawnNumber::create($request->validated());
+        $drawnNumber = $game->drawnNumbers()->create(['number' => $data['number']]);
 
-			return response()->json([
-				'status' => 201,
-				'message' => trans('DrawnNumber created successfully.'),
-				'data' => new DrawnNumberResource($drawnNumbers),
-			], 201);
-		}
-		catch (\Throwable $th)
-		{
-			throw new \Exception('DrawnNumber can not be created.' . $th->getMessage(), 500);
-		}
-	}
+        return response()->json([
+            'status'  => 201,
+            'message' => 'Number drawn successfully.',
+            'data'    => new DrawnNumberResource($drawnNumber),
+        ], 201);
+    }
 
+    public function destroy(Game $game, DrawnNumber $drawnNumber)
+    {
+        $drawnNumber->delete();
 
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  \App\Models\DrawnNumber $drawnNumbers
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function show(DrawnNumber $drawnNumbers)
-	{
-		try
-		{
-			return response()->json([
-				'status' => 200,
-				'data' => new DrawnNumberResource($drawnNumbers),
-			], 200);
-		}
-		catch(\Throwable $th)
-		{
-			throw new \Exception('DrawnNumber can not be shown.' . $th->getMessage(), 500);
-		}
-	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  \App\Http\Requests\DrawnNumberRequest $request
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function update(DrawnNumberRequest $request, DrawnNumber $drawnNumbers)
-	{
-		try
-		{
-			$drawnNumbers->update($request->validated());
-
-			return response()->json([
-				'status' => 201,
-				'message' => trans('DrawnNumber updated successfully.'),
-				'data' => new DrawnNumberResource($drawnNumbers),
-			], 201);
-		}
-		catch (\Throwable $th)
-		{
-			throw new \Exception('DrawnNumber can not be updated.' . $th->getMessage(), 500);
-		}
-	}
-
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  \App\Models\DrawnNumber $drawnNumbers
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	public function destroy(DrawnNumber $drawnNumbers)
-	{
-		try
-		{
-			$drawnNumbers->delete();
-
-			return response()->json([
-				'status' => 204,
-				'message' => trans('DrawnNumber deleted successfully.'),
-				'data' => new DrawnNumberResource($drawnNumbers),
-			], 204);
-		}
-		catch(\Throwable $th)
-		{
-			throw new \Exception('DrawnNumber can not be deleted.' . $th->getMessage(), 500);
-		}
-	}
-
-};
+        return response()->json([
+            'status'  => 200,
+            'message' => 'Drawn number removed.',
+        ]);
+    }
+}
