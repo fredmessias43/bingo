@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NumberDrawn;
 use App\Http\Controllers\Controller;
 use App\Models\DrawnNumber;
 use App\Models\Game;
@@ -34,6 +35,8 @@ class DrawnNumberController extends Controller
         }
 
         $drawnNumber = $game->drawnNumbers()->create(['number' => $data['number']]);
+
+        NumberDrawn::dispatch($game, $drawnNumber);
 
         return response()->json([
             'status'  => 201,
